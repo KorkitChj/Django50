@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ikao IT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style type="text/css">
+    body{
+      font-family: 'Kanit', sans-serif;
+    }
+    .col-sm-4{
+      margin-bottom: : 10px;
+    }
+    ./*background-custom{
+      background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fgadget-background&psig=AOvVaw0q3R-K_NbUrr3rh8urrhtc&ust=1592466353971000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLjy7NStiOoCFQAAAAAdAAAAABAO");
+    }*/
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center bg-warning">
+  <h1>IKao.co.th</h1>
+  <h5>ขายสินค้าไอทีทุกชนิด</h5>
+  <p><a href="{% url 'home-page' %}"><i class="fa fa-home"></i> หน้าแรก</a>  | 
+    <a href="{% url 'about-page' %}"><i class="fa fa-user-circle"></i> เกี่ยวกับเรา</a> | 
+    <a href="{% url 'contact-page' %}"><i class="fa fa-compress"></i> ติดต่อเรา</a>
+    <a href="{% url 'allproduct-page' %}"><i class="fa fa-product-hunt"></i>สินค้าทั้งหมด</a>
+    <a href="{% url 'addproduct-page' %}"><i class="fa fa-plus"></i>เพิ่มสินค้า</a>
+  </p> 
+</div>
+ 
+<div class="container">
+
+  {% block content %}
+
+  {% endblock content %}
+
+</div>
+
+
+</body>
+</html>
