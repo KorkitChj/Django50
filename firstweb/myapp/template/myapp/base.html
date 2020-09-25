@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Ikao IT</title>
   <meta charset="utf-8">
@@ -10,39 +11,91 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <style type="text/css">
-    body{
-      font-family: 'Kanit', sans-serif;
-    }
-    .col-sm-4{
-      margin-bottom: : 10px;
-    }
-    ./*background-custom{
-      background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fgadget-background&psig=AOvVaw0q3R-K_NbUrr3rh8urrhtc&ust=1592466353971000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLjy7NStiOoCFQAAAAAdAAAAABAO");
-    }*/
-  </style>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="{% static 'js/app.js' %}"></script>
 </head>
+
 <body>
 
-<div class="jumbotron text-center bg-warning">
-  <h1>IKao.co.th</h1>
-  <h5>ขายสินค้าไอทีทุกชนิด</h5>
-  <p><a href="{% url 'home-page' %}"><i class="fa fa-home"></i> หน้าแรก</a>  | 
-    <a href="{% url 'about-page' %}"><i class="fa fa-user-circle"></i> เกี่ยวกับเรา</a> | 
-    <a href="{% url 'contact-page' %}"><i class="fa fa-compress"></i> ติดต่อเรา</a>
-    <a href="{% url 'allproduct-page' %}"><i class="fa fa-product-hunt"></i>สินค้าทั้งหมด</a>
-    <a href="{% url 'addproduct-page' %}"><i class="fa fa-plus"></i>เพิ่มสินค้า</a>
-  </p> 
-</div>
- 
-<div class="container">
+  <div class="jumbotron text-center bg-info" style="margin-bottom:0">
+    <h1>IKao.co.th</h1>
+    <h5>ขายโทรศัพท์และสินค้าไอทีทุกชนิด</h5>
+  </div>
+  <nav class="navbar navbar-expand-sm bg-light navbar-light" style="margin-bottom: 2em;">
+    <a class="navbar-brand" href="{% url 'home-page' %}">Ikao.co.th</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav mr-auto">
 
-  {% block content %}
+        <li class="nav-item">
+          <a href="{% url 'about-page' %}" class="nav-link"><i class="fa fa-user-circle"></i> เกี่ยวกับเรา</a>
+        </li>
 
-  {% endblock content %}
+        <li class="nav-item">
+          <a href="{% url 'contact-page' %}" class="nav-link"><i class="fa fa-compress"></i> ติดต่อเรา</a>
+        </li>
 
-</div>
+        <li class="nav-item">
+          <a href="{% url 'allproduct-page' %}" class="nav-link"><i class="fa fa-product-hunt"></i> สินค้าทั้งหมด</a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">ประเภทสินค้า</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">โทรศัพท์มือถือ</a>
+            <a class="dropdown-item" href="#">โน๊ตบุ๊ค</a>
+            <a class="dropdown-item" href="#">ซอฟแวร์</a>
+          </div>
+        </li>
+
+        {% if user.is_authenticated and user.profile.usertype == 'member' %}
+        <li class="nav-item">
+          <a href="{% url 'mycart-page' %}" class="nav-link"><i class="fa fa-product-hunt"></i>ตระกร้าสินค้า
+            <span class="badge badge-warning">{{ user.profile.cartquan }}</span></a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'orderlist-page' %}" class="nav-link">รายการสั่งซื้อ
+        </li>
+        {% endif %}
+        {% if user.is_authenticated and user.profile.usertype == 'admin' %}
+        <li class="nav-item">
+          <a href="{% url 'addproduct-page' %}" class="nav-link"><i class="fa fa-plus"></i> เพิ่มสินค้า</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'allorderlist-page' %}" class="nav-link">รายการสั่งซื้อทั้งหมด
+        </li>
+        {% endif %}
+      </ul>
+
+      {% if user.is_authenticated %}
+
+      <img src="{{user.profile.photo.url}}" alt="profile" width="40px" height="40px" class="rounded-circle">&nbsp
+      <p style="margin-top:10px">สวัสดีคุณ&nbsp {{user.first_name}}
+        {{user.last_name}}
+      </p>&nbsp
+      <a class="btn btn-secondary" href="{% url 'logout' %}">ออกจากระบบ</a>
+      {% else %}
+      <a class="btn btn-success" href="{% url 'register-page' %}">สมัครสมาชิก</a>&nbsp&nbsp&nbsp
+      <a class="btn btn-success" href="{% url 'login' %}">เข้าสู่ระบบ</a>
+      {% endif %}
+
+    </div>
+
+  </nav>
+  <div class="container">
+
+    {% block content %}
+
+    {% endblock content %}
+
+  </div>
 
 
 </body>
+
 </html>

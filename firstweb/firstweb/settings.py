@@ -25,6 +25,7 @@ SECRET_KEY = 'q)v-$&fsxt!9dprckzizk(ghiaf$wdx*+f5i9hrh^wpm*&3*76'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#ใส่ * เพื่อให้ใช้ ngrok ได้
 ALLOWED_HOSTS = ['*']
 
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -106,16 +108,29 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+STAT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    STAT,
+]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home-page'
+LOGOUT_REDIRECT_URL = 'login'

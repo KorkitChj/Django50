@@ -1,0 +1,35 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+<table>
+    <h2>รายการสั่งซื้อทั้งหมด</h2>
+    <p>รายการสั่งซื้อและสถานะการสั่งซื้อ</p>
+    <tr>
+        <th>เวลาสั่งซื้อ</th>
+        <th>order id</th>
+        <th>ยอดรวม</th>
+        <th>สถานะ</th>
+    </tr>
+
+    {% for od in allorder %}
+
+    <tr>
+        <td>{{od.stamp}}</td>
+        <td>{{od.orderid}}</td>
+        <td>{{od.total}}</td>
+        <td>
+            {% if od.paid %}
+                จ่ายเงินแล้ว
+            {% else %}
+            <a href="#" class="btn btn-primary">อัพโหลดสลิป</a>
+            {% endif %}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock content %}

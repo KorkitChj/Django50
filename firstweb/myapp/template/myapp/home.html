@@ -1,36 +1,83 @@
 {% extends 'myapp/base.html' %}
- 
 
- 
+
 {% block content %}
-  <div class="row">
-    <div class="col-sm-4">
-      <img src="https://media.bnn.in.th/media/6901443292271/6901443292271-content2.jpg" width="190px" height="190px" style="margin: 10px">
-      <a href="{% url 'vivo-v19-page' %}"><h3>{{ product1 }}</h3></a>
-      <p>เราขายโทรศัพท์มือถือทุกชนิดคุณภาพดี ทั้ง Iphone,Samsung,Vivo,Oppo,etc</p>
-      <p>สามารถเลือกชมโทรศัพท์ของเราได้ทุกที่ผ่านเว็บของเรา</p>
-      <button class="btn btn-primary" type="submit">สั่งซื้อ</button>
-    </div>
-    <div class="col-sm-4">
-      <img src="https://notebookspec.com/nbs/upload_notebook/20200516-161514_c.jpg" width="190px" height="190px" style="margin: 10px">
-      <h3>{{ product2 }}</h3>
-      <p>เราขาย Notebook หลายหลายประเภท ทั้งใช้งานทั่วไปหรืองานเฉพาะทาง</p>
-      <p>สินค้าของเรามีหลายแบรนเช่น Apple,Asus,Acer,Dell,HP,etc</p>
-      <button class="btn btn-primary" type="submit">สั่งซื้อ</button>
-    </div>
-    <div class="col-sm-4">
-      <img src="https://anydifferencebetween.com/wp-content/uploads/2016/08/Difference-Between-Custom-Software-and-Utility-Software.jpg" width="190px" height="190px" style="margin: 10px" class="rounded">
-      <h3>{{ product3 }}</h3>        
-      <p>เราขาย Software ทุกชนิดที่มีที่ความหลากหลาย</p>
-      <p>เช่นงานด้านตัดต่อวีดีโอ,แก้ไขภาพ,งานบัญชีและอื่นๆ</p>
-      <button class="btn btn-primary" type="submit">สั่งซื้อ</button>
+
+<h3>สินค้าล่าสุด</h3>
+<p>สินค้าล่าสุดของร้าน</p>
+<div class="row">
+  {% for pd in product %}
+  <div class="col-sm-4">
+    <div class="card mb-4">
+      {% if pd.image %}
+      <img class="card-img-top" src="{{ pd.image.url }}">
+      {% elif pd.imageurl != None %}
+      <img class="card-img-top" src="{{ pd.imageurl }}">
+      {% else %}
+      <img class="card-img-top" src="/media/default.png">
+      {% endif %}
+      <div class="card-body">
+        <h1 class="card-title">{{ pd.name }}</h1>
+        <p>{{ pd.price }} บาท/{{ pd.unit }}</p>
+        <p>{{ pd.detail|linebreaks|truncatechars_html:100}}</p>
+        {% if pd.quantity > 0 %}
+        <p>สินค้ามีในสต็อค: {{ pd.quantity}} {{ pd.unit }}</p>
+        {% else %}
+        <p>
+          <font color="red">สินค้าอาจจะหมดสต็อค กรุณาติดต่อแอดมิน</font>
+        </p>
+        {% endif %}
+        {% if pd.instock == True %}
+        <button class="btn btn-success" type="submit">สั่งซื้อ</button>
+        {% else %}
+        <button class="btn btn-warning" type="submit">สินค้าหมด</button>
+        {% endif %}
+      </div>
+      <br><br>
     </div>
   </div>
+  {% endfor %}
+</div>
+
+
+<div class="container">
+  <center> <a href="{% url 'allproduct-page' %}">
+      <h1>ดูสินค้าทั้งหมด</h1>
+    </a></center>
+  <hr>
+</div>
+
+
+<h3>สินค้าขายดี (ต้อง preorder)</h3>
+<p>สินค้าของร้านที่ต้อง preorder</p>
+<div class="row">
+  {% for pd in preorder %}
+  <div class="col-sm-4">
+    <div class="card mb-4">
+      {% if pd.image %}
+      <img class="card-img-top" src="{{ pd.image.url }}">
+      {% elif pd.imageurl != None %}
+      <img class="card-img-top" src="{{ pd.imageurl }}">
+      {% else %}
+      <img class="card-img-top" src="/media/default.png">
+      {% endif %}
+      <div class="card-body">
+        <h1 class="card-title">{{ pd.name }}</h1>
+        <p>{{ pd.price }} บาท/{{ pd.unit }}</p>
+        <p>{{ pd.detail|linebreaks|truncatechars_html:100}}</p>
+        {% if pd.quantity > 0 %}
+        <p>สินค้ามีในสต็อค: {{ pd.quantity}} {{ pd.unit }}</p>
+        {% else %}
+        <p>
+          <font color="red">สินค้าหมดแล้ว พรีออร์เดอร์ได้</font>
+        </p>
+        <button class="btn btn-warning" type="submit">Preorder</button>
+        {% endif %}
+      </div>
+      <br><br>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
 {% endblock content %}
-
-
-
-
-
-
-

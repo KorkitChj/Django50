@@ -1,12 +1,13 @@
 {% extends 'myapp/base.html' %}
- 
+
 
 {% block content %}
-<h2>เพิ่มสินค้าในระบบ</h2>
+<div class="container" style="margin-bottom:100px">
+	<h2>เพิ่มสินค้าในระบบ</h2>
 	<p>คุณสามารถเพิ่มสินค้าเข้ามาในระบบได้ (เฉพาะแอดมิน)</p>
-	<form method="POST">
+	<form method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
-		
+
 		<div class="form-group">
 			<label for="name">Product Name:</label>
 			<input type="text" class="form-control" id="name" name="name">
@@ -27,13 +28,22 @@
 			<input type="text" class="form-control" id="imageurl" name="imageurl">
 		</div>
 
+		<div class="form-group">
+			<label for="quantity">Quantuty:</label>
+			<input type="text" class="form-control" id="quantity" name="quantity">
+		</div>
+
+		<div class="form-group">
+			<label for="unit">Unit:</label>
+			<input type="text" class="form-control" id="unit" name="unit">
+		</div>
+
+		<div class="form-group">
+			<label for="imageupload">Image Upload:</label>
+			<input type="file" class="form-control" id="imageupload" name="imageupload">
+		</div>
+
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
+</div>
 {% endblock content %}
-
-
-
-
-
-
-

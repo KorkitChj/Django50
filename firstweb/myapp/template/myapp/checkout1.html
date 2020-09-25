@@ -1,0 +1,64 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block content %}
+<div class="container" style="margin-bottom:100px">
+    <h2>ข้อมูลการจัดส่งสินค้า</h2>
+    <p>กรุณากรอกข้อมูลจัดส่งสินค้า</p>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="name">ชื่อ-สกุลผู้รับ:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="tel">เบอร์โทรศัพท์:</label>
+            <input type="text" class="form-control" id="tel" name="tel">
+        </div>
+
+        <div class="form-group">
+            <label for="address">ที่อยู่จัดส่ง</label>
+            <textarea class="form-control" name="address" id="address"
+            placeholder="ตัวอย่าง:เลขที่ 20 ถนนพหลโยธิน แขวงสามเสนใน พญาไท กทม. 10400"
+            cols="30" rows="10"></textarea>
+        </div>
+
+        <p>--------------------------</p>
+        <label>เลือประเภทการจัดส่ง</label>
+
+        <div class="form-check">
+            <label class="form-check-label" for="ems"></label>
+            <input type="radio" name="shipping" id="ems" value="ems"> EMS (50 บาท)
+        </div>
+
+        <div class="form-check">
+            <label class="form-check-label" for="register"></label>
+            <input type="radio" name="shipping" id="register" value="register"> ลงทะเบียน (35 บาท)
+        </div>
+
+        <p>--------------------------</p>
+        <label>การชำระเงิน</label>
+
+        <div class="form-check">
+            <label class="form-check-label" for="transfer"></label>
+            <input type="radio" name="payment" id="transfer" value="transfer"> โอนเงินผ่านบัญชีธนาคาร
+        </div>
+
+        <div class="form-check">
+            <label class="form-check-label" for="cod"></label>
+            <input type="radio" name="payment" id="cod" value="cod"> เก็บเงินปลายทาง
+        </div>
+
+        <div class="form-group">
+            <label for="other">หมายเหตุ</label>
+            <textarea class="form-control" name="other" id="other" placeholder="ฝากข้อความถึงผู้ขาย" cols="30" rows="10"></textarea>
+        </div>
+
+        <input type="hidden" name="page" value="information">
+
+        <button type="submit" class="btn btn-primary">NEXT</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+{% load humanize %}
+
+<div class="container">
+    <h3>ข้อมูลการจัดส่ง</h3>
+    <p>
+        ชื่อผู้รับ: {{name}}<br>
+        เบอร์โทร: {{tel}}<br>
+        ที่อยู่การจัดส่ง: {{address}}<br>
+        {% if shipping == 'ems' %}
+        รูปแบบการจัดส่ง: EMS<br>
+        {% else %}
+        รูปแบบการจัดส่ง: ลงทะเบียน<br>
+        {% endif %}
+
+        {% if payment == 'transfer' %}
+        ชำระผ่าน: โอนเงินเข้าบัญชีธนาคาร<br>
+        {% else %}
+        ชำระผ่าน: เก็บเงินปลายทาง<br>
+        {% endif %}
+        หมายเหตุ: {{other}}<br>
+    </p>
+
+
+</div>
+
+<h3>สินค้าทั้งหมด</h3><br>
+<p>รายการสินค้าที่สั่งซื้อ</p><br><br>
+
+<table>
+
+    <tr>
+        <th>สินค้า</th>
+        <th>ราคา</th>
+        <th>จำนวน</th>
+        <th>ผลรวม</th>
+    </tr>
+    {% for pd in mycart %}
+    <tr>
+        <td>{{pd.productname}}</td>
+        <td>{{pd.price}}</td>
+        <td>{{pd.quantity}}</td>
+        <td>{{pd.total}}</td>
+    </div>
+    </tr>
+
+
+    {% endfor %}
+
+</table><br>
+<div class="totals">
+    <div class="totals-item">
+        <label>จำนวน</label>
+        <div class="totals-value" id="count">{{count}}</div>
+    </div>
+    <div class="totals-item">
+        <label>รวมทั้งสิ้น</label>
+        <div class="totals-value" id="cart-subtotal">{{total|intcomma}}</div>
+    </div>
+</div>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" id="name" name="name" value="{{name}}">
+    <input type="hidden" id="tel" name="tel" value="{{tel}}">
+    <input type="hidden" id="address" name="address" value="{{address}}">
+    <input type="hidden" id="shipping" name="shipping" value="{{shipping}}">
+    <input type="hidden" id="payment" name="payment" value="{{payment}}">
+    <input type="hidden" id="other" name="other" value="{{other}}">
+    <input type="hidden" id="page" name="page" value="confirm">
+
+    <button type="submit" class="btn btn-primary">Confirm</button>
+</form>
+{% endblock content %}

@@ -15,11 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+from django.contrib.auth import views as auth_views #login
 # include คือการลิ้งค์โปรเจคกับแอพเข้ากัน
 # path คือการทำให้เว็บไซต์เรามี url ย่อย
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('myapp.urls'))
+    path('',include('myapp.urls')),
+    path('login/', auth_views.LoginView.as_view(template_name='myapp/login.html'),name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='myapp/logout.html'),name='logout')
     # บันทัดบนนี้เป็นการทำการให้โปรเจคลิ้งค์กับ urls ของแอพ
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

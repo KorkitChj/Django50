@@ -1,0 +1,80 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+{% if status == 'delete' %}
+<div class="alert alert-danger">
+    <strong>ลบสินค้าเรียบร้อยแล้ว!</strong> หากต้องการเพิ่มสินค้า กรุณาสั่งซื้อใหม่
+</div>
+{% endif %}
+
+<h3>แก้ไขข้อมูลตะกร้าสินค้าของฉัน</h3><br>
+<p>ท่านสามารถแก้ไขข้อมูลในตระกร้าสินค้าได้</p><br><br>
+
+<div class="shopping-cart">
+
+    <div class="column-labels">
+        <label class="product-image">รูปภาพ</label>
+        <label class="product-details">สินค้า</label>
+        <label class="product-price">ราคา</label>
+        <label class="product-quantity">จำนวน</label>
+        <label class="product-removal">ลบสินค้า</label>
+        <label class="product-line-price">ผลรวม</label>
+    </div>
+
+    <form method="POST" id="#mycart">
+        {% csrf_token %}
+        {% for pd in mycart %}
+
+
+        <div class="product">
+            <div class="product-image">
+                <img src="">
+            </div>
+            <div class="product-details">
+                <div class="product-title">{{pd.productname}}</div>
+                <p class="product-description"></p>
+            </div>
+            <div class="product-price" name="product_price">{{pd.price}}</div>
+            <div class="product-quantity">
+                <input type="number" name="pd_{{pd.productid}}" value="{{pd.quantity}}">
+            </div>
+            <div class="product-removal">
+                -
+            </div>
+            <div class="product-line-price">{{pd.total}}</div>
+        </div>
+
+        {% endfor %}
+
+        <!-- <div class="totals">
+            <div class="totals-item">
+                <label>รวมทั้งสิ้น</label>
+                <div class="totals-value" id="cart-subtotal">0</div>
+            </div>
+            <div class="totals-item">
+                <label>ภาษี (5%)</label>
+                <div class="totals-value" id="cart-tax">0</div>
+            </div>
+            <div class="totals-item">
+                <label>ขนส่ง</label>
+                <div class="totals-value" id="cart-shipping">0</div>
+            </div>
+            <div class="totals-item totals-item-total">
+                <label>ยอดชำระเงิน</label>
+                <div class="totals-value" id="cart-total">0</div>
+            </div>
+        </div> -->
+        <input type="hidden" name="checksave" value="checksave">
+        <button type="submit" class="btn checkout">Save</button>
+    </form>
+    <form id="formclear" method="post" onsubmit="return confirm('ยืนยันการลบใช่หรือไม่?')">
+        {% csrf_token %}
+        <input type="hidden" name="clear" value="clear">
+        <button type="submit" from="formclear" class="btn btclear">Delete All</button>
+    </form>
+
+</div>
+
+
+{% endblock content %}
